@@ -17,7 +17,7 @@ int main()
 {
 	//C'est à vous de voir si vous devez allouer dynamiquement ou non les élèments
 
-	//1-  Creez 15 objets du classe produit
+	//1-  Creez 15 objets du classe produit.
     
     
     
