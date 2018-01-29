@@ -15,11 +15,11 @@ public:
     Client (string  nom,  string prenom, int identifiant, string codePostal,  long date);
    
 	// methodes d'acces
-    string obtenirNom() ;
-    string obtenirPrenom() ;
-    int obtenirIdentifiant() ;
-    string obtenirCodePostal() ;
-    long obtenirDateNaissance() ;
+    string obtenirNom() const;
+    string obtenirPrenom() const;
+    int obtenirIdentifiant() const;
+    string obtenirCodePostal() const;
+    long obtenirDateNaissance() const;
     
     // methodes de modification
     void modifierNom(string nom) ;
@@ -29,7 +29,7 @@ public:
     void modifierDateNaissance(long date);
     
     // autres méthodes
-    void acheter (Produit * prod);
+    void acheter (Produit* produit);
     void afficherPanier();
     void livrerPanier();
     

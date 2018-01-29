@@ -40,7 +40,7 @@ void Panier::ajouterProduit(Produit* produit)
 	if (contenuPanier_ == nullptr)
 	{
 		Produit** tableauProduit = new Produit*[1];
-		tableauProduit[1] = produit; 
+		tableauProduit[0] = produit; 
 		delete[] contenuPanier_;
 		contenuPanier_ = tableauProduit;
 	}
