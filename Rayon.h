@@ -1,45 +1,45 @@
 /********************************************
-* Titre: Travail pratique #1 -Rayon.h
-* Date: 25 janvier 2018
-* Auteurs: Philippe Turcotte - 1849836            Maxymilian Krokowski - 1899369
+* Titre: Travail pratique #2 - Rayon.h
+* Date: 12 Fevrier 2018
+* Auteur: Philippe TURCOTTE 1849846
+*		  Maxymilian KROKOWSKI 1899369
 *******************************************/
-
-#ifndef RAYON_H
-#define RAYON_H
+#pragma once
 
 #include <string>
+#include <vector>
 #include "Produit.h"
+
 using namespace std;
 
 class Rayon
 {
-public:
-	// Constructeurs par defaut et par parametres
-    Rayon();
-	Rayon(string categorie);
-   
-	// Methodes d'acces
-	string obtenirCategorie() const;
-	Produit ** obtenirTousProduits() const;
-    int obtenirCapaciteProduits() const;
-    int obtenirNombreProduits() const;
 
-	// Methodes de modification
-	void modifierCategorie(string categorie);
-    
-    // autres methodes
-    void ajouterProduit (Produit * produit);
-    void afficher();
-	
+public:
+	Rayon(const string& cat);
+
+	~Rayon();
+
+	string obtenirCategorie() const;
+	vector<Produit*> obtenirTousProduits() const;
+	int obtenirCapaciteProduits() const;
+	int obtenirNombreProduits() const;
+
+	void modifierCategorie(const string& cat);
+
+	// TODO: Cette methode doit etre remplacee par la surchage de l'operateur +=
+	void ajouterProduit(Produit* produit);  
+	Rayon& operator+=(Produit* produit);
+
+	// TODO: Implermenter la methode compterDoublons
+	int compterDoublons(const Produit*& produit);
+
+	// TODO: Cette methode doit être remplacee par la surcharge de l'opérateur <<
+	friend std::ostream& operator<<(std::ostream& out, const Rayon& rayon);
 
 private:
-
-	// Attributs prives
 	string categorie_;
-    Produit ** tousProduits_;
-    int capaciteProduits_;
-	int nombreProduits_;
 
+	// TODO: Remplacer ces attributs par un vecteur de la STL
+	vector<Produit*> tousProduits_;
 };
-
-#endif

@@ -1,42 +1,48 @@
 /********************************************
-* Titre: Travail pratique #1 - Produit.h
-* Date: 25 janvier 2018
-* Auteur: Philippe Turcotte - 1849836
+* Titre: Travail pratique #2 - Produit.h
+* Date: 12 Fevrier 2018
+* Auteur: Philippe TURCOTTE 1849846
+*		  Maxymilian KROKOWSKI 1899369
 *******************************************/
 
-#ifndef PRODUIT_H
-#define PRODUIT_H
+#pragma once
 
 #include <string>
 #include <iostream>
+
 using namespace std;
 
 class Produit
 {
-public:
-	// Constructeurs par defaut et par parametres
-	Produit();
-	Produit(string nom, int reference, double prix);
 
-	// Methodes d'acces
+public:
+	Produit(const string& nom = "outil", int reference = 0, double prix = 0.0);
+
 	string obtenirNom() const;
 	int obtenirReference() const;
 	double obtenirPrix() const;
 
-	// Methodes de modification
-	void modifierNom(string nom);
+	void modifierNom(const string& nom);
 	void modifierReference(int reference);
 	void modifierPrix(double prix);
-   
-    // autres methodes
-    void afficher();
-   
-private:
 
-	// attributs prives
-	string nom_;
+	// TODO: Ajouter la surcharge de l'opérateur >
+    bool operator>(const Produit &produit) const;
+    
+	// TODO: Ajouter la surcharge de l'opérateur <
+    bool operator<(const Produit &produit) const;
+    
+	// TODO: Ajouter la surcharge de l'operateur ==
+    bool operator==(const Produit &produit) const;
+	
+	// TODO: Ajouter la surcharge de l'opérateur >>
+    friend std::istream& operator>>(std::istream& in, const Produit& produit);
+
+    // TODO: Cette methode doit être remplacée par la surcharge de l'opérateur <<
+    friend std::ostream& operator<<(std::ostream& out, const Produit& produit);
+    
+private:
+	std::string nom_;
 	int reference_;
     double prix_;
 };
-
-#endif

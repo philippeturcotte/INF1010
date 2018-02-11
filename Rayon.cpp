@@ -1,112 +1,94 @@
 /********************************************
-* Titre: Travail pratique #1 - Produit.h
-* Date: 25 janvier 2018
-* Auteurs: Philippe Turcotte - 1849836            Maxymilian Krokowski - 1899369
+* Titre: Travail pratique #2 - Rayon.cpp
+* Date: 12 Fevrier 2018
+* Auteur: Philippe TURCOTTE 1849846
+*		  Maxymilian KROKOWSKI 1899369
 *******************************************/
-
-#include <string>
-#include <vector>
-#include <iostream>
-using namespace std;
-
 #include "Rayon.h"
 
-// Initiation du constructeur par default
-Rayon::Rayon()
-	: categorie_("inconnu"), tousProduits_(nullptr), capaciteProduits_(0),nombreProduits_(0)
+Rayon::Rayon(const string& cat) :
+	categorie_(cat)
 {
 }
 
-// Initiation du constructeur pour l'attribut categorie
-Rayon::Rayon(string categorie)
-	: categorie_(categorie), tousProduits_(nullptr), capaciteProduits_(0), nombreProduits_(0)
+Rayon::~Rayon()
 {
-	
 }
 
-// Methode d'acces aux attributs
+// Methodes d'acces
 string Rayon::obtenirCategorie() const
 {
 	return categorie_;
 }
 
-Produit** Rayon::obtenirTousProduits() const
+vector<Produit*> Rayon::obtenirTousProduits() const
 {
 	return tousProduits_;
 }
 
 int Rayon::obtenirCapaciteProduits() const
 {
-	return capaciteProduits_;
+	return tousProduits_.size();
 }
 
 int Rayon::obtenirNombreProduits() const
 {
-	return nombreProduits_;
+	int nbreProduit = 0;
+	for (int i = 0; i < tousProduits_.size(); i++)
+	{
+		if(tousProduits_[i] != nullptr)
+		{
+			nbreProduit ++;
+		}
+	}
+	return nbreProduit;
 }
 
-// Methode de modification de l'attribut categorie
-void Rayon::modifierCategorie(string categorie)
+// Methodes de modification
+void Rayon::modifierCategorie(const string& cat)
 {
-	categorie_ = categorie;
+	categorie_ = cat;
 }
 
-// Ajout d'un pointeur de produit
+// Ajouter un produit au rayon
 
-void Rayon::ajouterProduit(Produit* produit) 
+void Rayon::ajouterProduit(Produit* produit)  
 {
-    // si il y a rien dans tousProduits
-	if (tousProduits_ == nullptr)
+	tousProduits_.push_back(produit);
+}
+
+Rayon& Rayon::operator+=(Produit* produit)
+{
+	ajouterProduit(produit);
+	return *this;
+}
+
+// la methode doublons
+int Rayon::compterDoublons(const Produit*& produit)
+{
+	int doublons = 0;
+	for(int i = 0; i < tousProduits_.size(); i++)
 	{
-		Produit** tableauProduit = new Produit*[5];
-		tableauProduit[0] = produit;
-        
-        for (int i = 0; i < nombreProduits_; i++)
-            
-        {
-            tableauProduit[i] = tousProduits_[i];
-        }
-        
-        delete [] tousProduits_ ;
-        
-		tousProduits_ = tableauProduit;
-        
-        capaciteProduits_ = 5;
-        
-        nombreProduits_ = 1;
-        
-	}
-    
-    // si tousProduits est plein
-	else if (capaciteProduits_ == nombreProduits_)
-	{
-		Produit** tableauProduit = new Produit*[capaciteProduits_ + 5];
-            for (int i = 0; i < nombreProduits_; i++)  
-            {
-                tableauProduit[i] = tousProduits_[i];
-            }
-        tableauProduit[nombreProduits_] = produit;
-        for (int j=0; j<nombreProduits_; j++)
-        {
-            delete tousProduits_[j];
-        }
-       delete [] tousProduits_ ;
-       tousProduits_ = tableauProduit;
-	   capaciteProduits_ = capaciteProduits_ + 5;
-	   nombreProduits_++;
-	}
-    // si il reste de lespace a tousProduits
-	else
+		if (tousProduits_[i] == produit)
+		{
+			doublons ++;
+		}
+	}			
+	return doublons;
+}
+
+// surcharge de l'opérateur <<
+std::ostream& operator<<(std::ostream& out, const Rayon& rayon)
+{
+    out << "Les produits du rayon sont: " ;
+
+    for (int i = 0; i < rayon.tousProduits_.size(); i ++)
     {
-        tousProduits_[nombreProduits_] = produit;
-
-	nombreProduits_++;
+    	out << rayon.tousProduits_[i] << endl;
     }
 
-}
-
-// Afficher les attributs du constructeur
-void afficherProduit(Rayon rayon)
-{
-	cout << rayon.obtenirCategorie() << rayon.obtenirTousProduits() << rayon.obtenirCapaciteProduits() << rayon.obtenirNombreProduits();
+    out << "La capacite de ce rayon est de " << rayon.tousProduits_.size() << " nombre de produits." ;
+    out << "Le nombre de produit actuel est de "<< rayon.obtenirNombreProduits() << endl;
+    
+    return out;
 }
